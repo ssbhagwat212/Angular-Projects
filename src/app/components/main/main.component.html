@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row my-2">
+        <app-aside class="col-md-4"></app-aside>
+        <div class="player col-md-8">
+
+            <!-- layout for next and previous buttons -->
+            <div class="row control-buttons my-2">
+                <button class="btn btn-primary mx-2">Previous</button><button class="btn btn-primary mx-2">Pause</button><button class="btn btn-primary mx-2">Next</button>
+            </div>
+            <!-- load songs using *ngIf -->
+            <div class="row mx-auto" *ngIf="songs && songs.length">
+
+                <!-- music player body using card -->
+                <div class="card mr-2 mt-2 bg-secondary border border-dark" style="width:18rem;" *ngFor='let s of songs'>
+                    <!-- using [] for property binding -->
+                    <img *ngIf="s.coverFlag" [src]="s.cover" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Title: {{s.title}}</h5>
+                        <p class="card-text">Genre: {{s.genre}}</p>
+                        <p class="card-text">Singer: {{s.singer}}</p>
+                        <p class="card-text">Rating: {{s.rating}}</p>
+
+                        <!-- rating stars -->
+                        <ngb-rating [max]="5" [(rate)]="s.rating" [readonly]="false"></ngb-rating>
+                        <!-- <a href="#" class="btn btn-primary">Watch Now</a> -->
+                        <!-- <button class="btn btn-primary" (click)='toggleImg(m)'>{{m.imgFlag ? 'Hide': 'Show'}}</button> -->
+                        <!-- player control -->
+                        <audio #audio >
+                            <source [src]='s.path' type="audio/ogg">
+                            <p>Your browser does not support the audio element.</p>
+                        </audio><br>
+                        <div class="btn btn-default" (click)='changeState(s,audio)'><i [ngClass]="{'bi bi-pause-circle':s.isPlaying,'bi bi-play-circle': !s.isPlaying}"></i>{{s.isPlaying ? "Pause" : "Play"}}</div>
+                        <!-- <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button>                         -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="card " style="width: 20rem;">
+                <img src="../../../assets/astronaut.jpg" alt="astronaut" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Title</h5>
+                    <p class="card-text">Astronaut</p>
+                    <audio controls muted>
+                        <source src="../../../assets/astronaut.mp3" type="audio/ogg">
+                        <source src="horse.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+
+</div>
